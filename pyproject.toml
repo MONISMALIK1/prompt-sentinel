@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "prompt-sentinel"
+version = "0.1.0"
+description = "Git-native LLM prompt regression testing. Record golden outputs, detect regressions in CI, diff prompt changes."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Monis Malik", email = "102479320+MONISMALIK1@users.noreply.github.com" }]
+keywords = ["llm", "prompt", "testing", "regression", "ci", "langchain", "openai", "evaluation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Testing",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+requires-python = ">=3.10"
+dependencies = ["click>=8.0"]
+
+[project.optional-dependencies]
+yaml = ["pyyaml>=6.0"]
+dev  = ["pytest>=7", "pytest-cov", "pyyaml>=6.0", "click>=8.0"]
+
+[project.scripts]
+prompt-sentinel = "prompt_sentinel.cli:main"
+
+[project.urls]
+Homepage   = "https://github.com/MONISMALIK1/prompt-sentinel"
+Repository = "https://github.com/MONISMALIK1/prompt-sentinel"
+Issues     = "https://github.com/MONISMALIK1/prompt-sentinel/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

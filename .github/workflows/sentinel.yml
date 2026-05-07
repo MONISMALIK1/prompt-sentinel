@@ -1,0 +1,39 @@
+name: Prompt Regression Tests
+
+on:
+  push:
+    paths:
+      - 'prompts/**'
+      - 'sentinel.yaml'
+  pull_request:
+    paths:
+      - 'prompts/**'
+      - 'sentinel.yaml'
+
+jobs:
+  regression-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install prompt-sentinel
+        run: pip install "prompt-sentinel[yaml]"
+
+      - name: Run regression tests
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          prompt-sentinel ci \
+            --config sentinel.yaml \
+            --json-report sentinel-report.json
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sentinel-report
+          path: sentinel-report.json

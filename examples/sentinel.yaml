@@ -1,0 +1,41 @@
+# sentinel.yaml — prompt-sentinel CI config
+# Run with: prompt-sentinel ci --config examples/sentinel.yaml
+
+model: gpt-4o-mini
+temperature: 0.0
+regression_threshold: 0.80
+
+suites:
+
+  - name: billing_classifier
+    prompt: prompts/billing_classifier.txt
+    cases:
+      - input: "I need a refund for my last order"
+        assert:
+          - contains: "refund"
+          - not_contains: "error"
+          - min_length: 10
+
+      - input: "Cancel my subscription immediately"
+        assert:
+          - contains: "cancel"
+          - not_contains: "unable"
+
+      - input: "My card was charged twice"
+        assert:
+          - contains: "charge"
+          - min_length: 15
+
+  - name: support_router
+    prompt: prompts/support_router.txt
+    cases:
+      - input: "My account is locked and I can't login"
+        assert:
+          - contains: "account"
+          - min_length: 20
+          - max_length: 500
+
+      - input: "How do I upgrade my plan?"
+        assert:
+          - contains: "plan"
+          - not_contains: "sorry, I can't"
