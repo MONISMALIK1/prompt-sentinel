@@ -1,5 +1,7 @@
 # prompt-sentinel 🛡️
 
+[![tests](https://github.com/MONISMALIK1/prompt-sentinel/actions/workflows/tests.yml/badge.svg)](https://github.com/MONISMALIK1/prompt-sentinel/actions/workflows/tests.yml)
+
 **Git-native LLM prompt regression testing. No SaaS. No sign-up. One CLI.**
 
 A company lost $2M because a 3-word prompt change silently broke their billing classifier in production. Nobody noticed for 6 days.
