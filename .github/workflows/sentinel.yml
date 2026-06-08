@@ -14,19 +14,23 @@ jobs:
   regression-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
       - name: Install prompt-sentinel
-        run: pip install "prompt-sentinel[yaml]"
+        run: pip install ".[yaml]"   # from the checked-out source (not yet on PyPI)
 
       - name: Run regression tests
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY not configured — skipping prompt regression run."
+            exit 0
+          fi
           prompt-sentinel ci \
             --config sentinel.yaml \
             --json-report sentinel-report.json
