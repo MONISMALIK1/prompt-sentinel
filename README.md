@@ -31,11 +31,15 @@ prompt-sentinel test \
 
 ## Install
 
+Install from GitHub (not yet published to PyPI):
+
 ```bash
-pip install prompt-sentinel
+pip install "git+https://github.com/MONISMALIK1/prompt-sentinel.git"
 # For CI mode with sentinel.yaml:
-pip install "prompt-sentinel[yaml]"
+pip install "prompt-sentinel[yaml] @ git+https://github.com/MONISMALIK1/prompt-sentinel.git"
 ```
+
+Or from a clone: `git clone … && cd prompt-sentinel && pip install ".[yaml]"`.
 
 ---
 
@@ -163,10 +167,10 @@ jobs:
   regression-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with: { python-version: '3.12' }
-      - run: pip install "prompt-sentinel[yaml]"
+      - run: pip install ".[yaml]"   # from the checked-out source (not yet on PyPI)
       - run: prompt-sentinel ci --config sentinel.yaml
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
